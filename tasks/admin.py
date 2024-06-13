@@ -4,9 +4,9 @@ from .models import User, Role
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'password', 'last_name', 'first_name', 'father_name', 'phone', 'email', 'full_access')
+    list_display = ('username', 'password', 'last_name', 'first_name', 'father_name', 'phone', 'email', 'role', 'full_access')
     list_filter = ('role', 'is_superuser')
-    search_fields = ('username', 'first_name', 'last_name', 'father_name', 'email', 'phone')
+    search_fields = ('username', 'first_name', 'last_name', 'father_name', 'email', 'phone', 'role', 'full_access')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('last_name', 'first_name', 'father_name', 'email', 'phone', 'full_access')}),
