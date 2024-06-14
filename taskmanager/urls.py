@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from tasks.views import EmployeeApiView, CustomerApiView, TasklistApiView, TakeTaskApiView, FinishTaskApiView
+from tasks.views import (EmployeeApiView, CustomerApiView, TasklistApiView, TakeTaskApiView, FinishTaskApiView,
+                         CurrentUserApiView)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/currentuser', CurrentUserApiView.as_view()),
     path('api/v1/customers', CustomerApiView.as_view()),
     path('api/v1/employees', EmployeeApiView.as_view()),
 

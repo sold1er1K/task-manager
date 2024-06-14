@@ -1,16 +1,26 @@
 from django.shortcuts import render
 from django.db.models import Q
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from .serializers import EmployeeSerializer, CustomerSerializer, TasklistSerializer, TaskSerializer
+from .serializers import EmployeeSerializer, CustomerSerializer, TasklistSerializer, TaskSerializer, CurrentUserSerializer
 from .permissions import IsEmployee, IsFullAccessEmployee, IsCustomer, IsCustomerOrEmployee
 from .models import Task
 from django.http import Http404
 
 
 User = get_user_model()
+
+
+class CurrentUserApiView(APIView):
+    permission_classes = [IsCustomerOrEmployee]
+
+    def get(self, request):
+        user = request.user
+        serializer = CurrentUserSerializer(user)
+        return Response(serializer.data)
 
 
 class EmployeeApiView(generics.ListCreateAPIView):

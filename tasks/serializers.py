@@ -58,6 +58,13 @@ class CustomerSerializer(UserSerializer):
         return representation
 
 
+class CurrentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'father_name', 'email', 'phone',
+                  'role', 'full_access')
+
+
 class TasklistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
