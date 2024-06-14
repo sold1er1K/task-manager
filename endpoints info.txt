@@ -1,0 +1,21 @@
+
+api/v1/currentuser  -- GET -- Информация о текущем пользователе
+
+api/v1/customers -- GET -- Список всех заказчиков (доступно только для Employee)
+api/v1/customers -- POST --  Cоздать работника (доступно только для Employee c full_access = True)
+
+api/v1/employees -- GET -- Список всех работников (доступно как для Employee, так и для Customer)
+api/v1/employees -- POST --  Cоздать работника (доступно только для Employee c full_access = True)
+
+api/v1/tasklist -- GET -- Список задач (для Customer выводит только те задачи, которые создал он сам; для Employee выводит задачи все, которые он взял себе + все, которые не приняты на данный момент никем из сотрудников; для Employee с full_access выводит абсолютно все Task)
+
+api/v1/tasklist -- POST -- Создать задачу (только для Customer)
+
+api/v1/tasklist/<int:pk>/take -- PATCH -- Устанавливает эту задачу этому пользователю (Если он Employee)
+api/v1/tasklist/<int:pk>/finish -- PATCH -- Завершает задачу (Для пользователя, чей id привязан к этой Task в поле employee_id).
+
+api/v1/token/ -- POST -- Получить токен
+api/v1/token/refresh/ -- POST -- Обновить токен (5 минут access/ 1 день refresh)
+api/v1/token/verify/ -- POST -- Проверить токен
+
+
