@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Role
+from .models import User, Role, Task
 
 
 class CustomUserAdmin(UserAdmin):
@@ -16,3 +16,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Role)
+admin.site.register(Task)

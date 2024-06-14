@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Role
-
+from .models import Role, Task
 
 User = get_user_model()
 
@@ -57,3 +56,32 @@ class CustomerSerializer(UserSerializer):
         if 'full_access' in representation:
             representation.pop('full_access')
         return representation
+
+
+class TasklistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'description', 'status', 'report')
+        read_only_fields = ('created_at', 'updated_at', 'closed_at')
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['customer'] = user
+        return super().create(validated_data)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['customer_id'] = instance.customer_id
+        representation['employee_id'] = instance.employee_id
+        return representation
+
+    def validate(self, data):
+        if data.get('status') == 'completed' and not data.get('report'):
+            raise serializers.ValidationError("Отчет не может быть пустым при закрытии задачи.")
+        return data
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'description', 'status', 'report', 'customer', 'employee')
